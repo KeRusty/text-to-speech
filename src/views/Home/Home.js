@@ -5,13 +5,14 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Copyright from "../../components/Copyright";
 
-
+//import TextConverter from "../../components/TextConverter";
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -51,11 +52,18 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
 export default function Checkout() {
+
     const classes = useStyles();
 
+    const onSubmit = (e) => {
 
+        e.preventDefault();
+
+        let text = e.target.text.value
+
+        //TextConverter(text)
+    }
 
 
     return (
@@ -63,7 +71,7 @@ export default function Checkout() {
 
             <CssBaseline />
 
-            <AppBar position="absolute" color="default" className={classes.appBar}>
+            <AppBar position="absolute" color="primary" className={classes.appBar}>
 
                 <Toolbar>
 
@@ -74,45 +82,63 @@ export default function Checkout() {
             </AppBar>
 
             <main className={classes.layout}>
+
                 <Paper className={classes.paper}>
 
-                    <Typography component="h1" variant="h4" align="center">Text to Speech Converter</Typography>
+                    <form className={classes.form} noValidate onSubmit={onSubmit}>
 
-                    <br />
 
-                    <React.Fragment>
-                        <Typography variant="h6" gutterBottom>Enter Text in the Fields Below</Typography>
+                        <Typography component="h1" variant="h4" align="center">Text to Speech Converter</Typography>
 
-                        <Grid container spacing={3}>
+                        <br />
 
-                            <Grid item xs={12}>
-                                <TextField
-                                    id="text"
-                                    name="text"
-                                    label="Enter Text"
-                                    fullWidth
-                                    autoComplete="billing address-line1"
-                                />
+                        <React.Fragment>
+                            <Typography variant="h6" gutterBottom>Enter Text in the Fields Below</Typography>
+
+                            <Grid container spacing={3}>
+
+                                <Grid item xs={12}>
+                                    <TextField
+                                        id="text"
+                                        name="text"
+                                        label="Enter Text"
+                                        fullWidth
+                                        autoComplete="billing address-line1"
+                                    />
+
+                                </Grid>
+
+
+                                <Grid item xs={12}>
+
+                                    <FormControlLabel
+                                        control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
+                                        label="Use this address for payment details"
+                                    />
+
+                                </Grid>
 
                             </Grid>
 
+                        </React.Fragment>
 
-                            <Grid item xs={12}>
+                        <React.Fragment>
 
-                                <FormControlLabel
-                                    control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-                                    label="Use this address for payment details"
-                                />
+                            <div className={classes.buttons}>
 
-                            </Grid>
+                                <Button variant="contained" color="primary" className={classes.button}>Convert</Button>
 
-                        </Grid>
+                            </div>
 
-                    </React.Fragment>
+                        </React.Fragment>
+
+
+                    </form>
 
                 </Paper>
 
                 <Copyright />
+
             </main>
 
         </React.Fragment>

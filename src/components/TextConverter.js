@@ -7,10 +7,10 @@ const util = require('util');
 // Creates a client
 const client = new textToSpeech.TextToSpeechClient();
 
-async function quickStart(props) {
+async function quickStart(text) {
 
     // The text to synthesize
-    const text = 'hello, world!';
+    //const text = 'hello, world!';
 
     // Construct the request
     const request = {
