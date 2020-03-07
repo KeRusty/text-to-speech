@@ -6,13 +6,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Copyright from "../../components/Copyright";
-
-//import TextConverter from "../../components/TextConverter";
+import googleTTS from 'google-tts-api';
+import TextConverter from "../../components/TextConverter";
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -49,12 +47,20 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(3),
         marginLeft: theme.spacing(1),
     },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
 }));
 
 
-export default function Checkout() {
+export default function Checkout(props) {
 
     const classes = useStyles();
+
 
     const onSubmit = (e) => {
 
@@ -62,7 +68,15 @@ export default function Checkout() {
 
         let text = e.target.text.value
 
-        //TextConverter(text)
+        /*googleTTS(text, 'en', 1).
+            then(function (url) {
+                console.log(url); // https://translate.google.com/translate_tts?...
+            })
+            .catch(function (err) {
+                console.error(err.stack);
+            });*/
+
+        TextConverter.quickStart(text)
     }
 
 
@@ -85,10 +99,9 @@ export default function Checkout() {
 
                 <Paper className={classes.paper}>
 
+                    <Typography component="h1" variant="h4" align="center">Text to Speech Converter</Typography>
+
                     <form className={classes.form} noValidate onSubmit={onSubmit}>
-
-
-                        <Typography component="h1" variant="h4" align="center">Text to Speech Converter</Typography>
 
                         <br />
 
@@ -103,17 +116,8 @@ export default function Checkout() {
                                         name="text"
                                         label="Enter Text"
                                         fullWidth
-                                        autoComplete="billing address-line1"
-                                    />
-
-                                </Grid>
-
-
-                                <Grid item xs={12}>
-
-                                    <FormControlLabel
-                                        control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-                                        label="Use this address for payment details"
+                                        multiline
+                                        rowsMax="4"
                                     />
 
                                 </Grid>
@@ -126,12 +130,11 @@ export default function Checkout() {
 
                             <div className={classes.buttons}>
 
-                                <Button variant="contained" color="primary" className={classes.button}>Convert</Button>
+                                <Button variant="contained" color="primary" type="submit" className={classes.submit}>Convert</Button>
 
                             </div>
 
                         </React.Fragment>
-
 
                     </form>
 

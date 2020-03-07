@@ -10,11 +10,11 @@ const client = new textToSpeech.TextToSpeechClient();
 async function quickStart(text) {
 
     // The text to synthesize
-    //const text = 'hello, world!';
+    // const text = 'hello, world!';
 
     // Construct the request
     const request = {
-        input: { text: text },
+        input: { text: "test" },
         // Select the language and SSML voice gender (optional)
         voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
         // select the type of audio encoding
