@@ -8,9 +8,14 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+
 import Copyright from "../../components/Copyright";
-import googleTTS from 'google-tts-api';
-import TextConverter from "../../components/TextConverter";
+import AppFetch from "../../config";
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -54,13 +59,32 @@ const useStyles = makeStyles(theme => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    formControl: {
+        minWidth: 140,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
 }));
 
 
-export default function Checkout(props) {
+export default function Checkout() {
 
     const classes = useStyles();
 
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+    const [gender, setGender] = React.useState('');
+
+    const [language, setLanguage] = React.useState('');
+
+    const handleGenderChange = event => {
+        setGender(event.target.value);
+    };
+
+    const handleLanguageChange = event => {
+        setLanguage(event.target.value);
+    };
 
     const onSubmit = (e) => {
 
@@ -68,15 +92,19 @@ export default function Checkout(props) {
 
         let text = e.target.text.value
 
-        /*googleTTS(text, 'en', 1).
-            then(function (url) {
-                console.log(url); // https://translate.google.com/translate_tts?...
-            })
-            .catch(function (err) {
-                console.error(err.stack);
-            });*/
+        AppFetch.post('/ttsConvert', { text: text, gender: gender, language: language })
+            .then(function (response) {
 
-        TextConverter.quickStart(text)
+                enqueueSnackbar("Output.mp3 Has been Produced in Server Folder", { variant: 'success' });
+                setTimeout(() => closeSnackbar, 10000)
+            })
+            .catch(function (error) {
+
+                enqueueSnackbar(error.message, { variant: 'error' });
+                setTimeout(() => closeSnackbar, 10000)
+
+            });
+
     }
 
 
@@ -111,6 +139,7 @@ export default function Checkout(props) {
                             <Grid container spacing={3}>
 
                                 <Grid item xs={12}>
+
                                     <TextField
                                         id="text"
                                         name="text"
@@ -119,6 +148,52 @@ export default function Checkout(props) {
                                         multiline
                                         rowsMax="4"
                                     />
+
+                                </Grid>
+
+                                <Grid item xs={4}>
+
+                                    <FormControl variant="filled" className={classes.formControl}>
+
+                                        <InputLabel id="voiceTypeInput">Voice Type</InputLabel>
+
+                                        <Select
+                                            labelId="voiceType"
+                                            id="voiceType"
+                                            value={gender}
+                                            onChange={handleGenderChange}
+                                        >
+
+                                            <MenuItem value={"MALE"}>Male</MenuItem>
+                                            <MenuItem value={"FEMALE"}>Female</MenuItem>
+                                            <MenuItem value={"NEUTRAL"}>Neutral</MenuItem>
+
+                                        </Select>
+
+                                    </FormControl>
+
+                                </Grid>
+
+                                <Grid item xs={4}>
+
+                                    <FormControl variant="filled" className={classes.formControl}>
+
+                                        <InputLabel id="languageInput">Language</InputLabel>
+
+                                        <Select
+                                            labelId="languageType"
+                                            id="languageType"
+                                            value={language}
+                                            onChange={handleLanguageChange}
+                                        >
+
+                                            <MenuItem value={"en-US"}>English (United States)</MenuItem>
+                                            <MenuItem value={"en-GB"}>English (United Kingdom)</MenuItem>
+                                            <MenuItem value={"en-AU"}>English (Australia)</MenuItem>
+
+                                        </Select>
+
+                                    </FormControl>
 
                                 </Grid>
 
