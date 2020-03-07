@@ -3,6 +3,10 @@
 
 Please have the API Running at [http://localhost:3000](http://localhost:3000)
 
+### `npm install`
+
+This will install the app<br />
+
 ### `npm start`
 
 Runs the app in the development mode.<br />

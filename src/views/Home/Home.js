@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(3, 0, 2),
     },
     formControl: {
-        minWidth: 140,
+        minWidth: 240,
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -151,7 +151,7 @@ export default function Checkout() {
 
                                 </Grid>
 
-                                <Grid item xs={4}>
+                                <Grid item xs={6}>
 
                                     <FormControl variant="filled" className={classes.formControl}>
 
@@ -174,7 +174,7 @@ export default function Checkout() {
 
                                 </Grid>
 
-                                <Grid item xs={4}>
+                                <Grid item xs={6}>
 
                                     <FormControl variant="filled" className={classes.formControl}>
 
