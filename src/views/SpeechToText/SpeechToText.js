@@ -11,6 +11,7 @@ import Copyright from "../../components/Copyright";
 import NavBar from "../../components/NavBar";
 import AppFetch from "../../config";
 import { useSnackbar } from 'notistack';
+import { DropzoneArea } from 'material-ui-dropzone'
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -38,11 +39,12 @@ const useStyles = makeStyles(theme => ({
     },
     buttons: {
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
     },
     button: {
-        marginTop: theme.spacing(3),
-        marginLeft: theme.spacing(1),
+        //marginTop: theme.spacing(3),
+        //marginLeft: theme.spacing(1),
+        width: '100%'
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -66,28 +68,19 @@ export default function TTSConverter() {
 
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-    const [gender, setGender] = React.useState('');
+    let [file, setFile] = React.useState('');
 
-    const [language, setLanguage] = React.useState('');
-
-    const handleGenderChange = event => {
-        setGender(event.target.value);
-    };
-
-    const handleLanguageChange = event => {
-        setLanguage(event.target.value);
-    };
 
     const onSubmit = (e) => {
 
         e.preventDefault();
 
-        let text = e.target.text.value
+        console.log(file, "FILE")
 
-        AppFetch.post('/ttsConvert', { text: text, gender: gender, language: language })
+        /*AppFetch.post('/SpeechConvert', { file: file })
             .then(function (response) {
 
-                enqueueSnackbar("Output.mp3 Has been Produced in Server Folder", { variant: 'success' });
+                enqueueSnackbar("Audio Will be Transcribed", { variant: 'success' });
                 setTimeout(() => closeSnackbar, 10000)
             })
             .catch(function (error) {
@@ -96,53 +89,50 @@ export default function TTSConverter() {
                 setTimeout(() => closeSnackbar, 10000)
 
             });
+*/
 
     }
 
+    const handleChange = files => {
+        setFile(files)
+    }
+
+    const onDrop = files => {
+        console.log(files)
+    }
 
     return (
         <React.Fragment>
 
             <CssBaseline />
 
-            <NavBar heading={"Text to Speech Converter"} />
+            <NavBar heading={"Speech to Text Converter"} />
 
             <main className={classes.layout}>
 
                 <Paper className={classes.paper}>
 
-                    <Typography component="h1" variant="h4" align="center">Text to Speech Converter</Typography>
+                    <Typography component="h1" variant="h4" align="center">Speech To Text Converter</Typography>
 
                     <form className={classes.form} noValidate onSubmit={onSubmit}>
 
                         <br />
 
                         <React.Fragment>
-                            <Typography variant="h6" gutterBottom>Enter Text in the Fields Below</Typography>
+                            <Typography variant="h6" gutterBottom>Enter an Audio File Below</Typography>
 
                             <Grid container spacing={3}>
 
                                 <Grid item xs={12}>
 
-                                    <input
-                                        color="primary"
-                                        accept="image/*"
-                                        type="file"
-                                        //onChange={onChange}
-                                        id="icon-button-file"
-                                        style={{ display: 'none', }}
+                                    <DropzoneArea
+                                        onChange={handleChange}
+                                        acceptedFiles={['audio/*']}
+                                        filesLimit={1}
+                                        onDrop={onDrop}
+                                        dropzoneText={"Drag and drop an Audio file here or click"}
                                     />
-                                    <label htmlFor="icon-button-file">
-                                        <Button
-                                            variant="contained"
-                                            component="span"
-                                            className={classes.button}
-                                            size="large"
-                                            color="primary"
-                                        >
-                                            <FileCopyIcon className={classes.extendedIcon} />
-                                        </Button>
-                                    </label>
+
                                 </Grid>
 
                             </Grid>
