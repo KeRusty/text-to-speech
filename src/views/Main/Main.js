@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 // Routes
 import Home from '../Home/Home';
+import TextToSpeech from '../TextToSpeech/TextToSpeech';
 
 
 class Main extends Component {
@@ -19,6 +20,7 @@ class Main extends Component {
             <main>
                 <Switch>
                     <Route exact path="/" component={Home} />
+                    <Route exact path="/TTSConverter" component={TextToSpeech} />
                 </Switch>
             </main>
         );
