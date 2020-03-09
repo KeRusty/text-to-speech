@@ -1,3 +1,26 @@
+## Obtain authentication credentials.
+
+    Create local credentials by running the following command
+
+    * Go to API Manager -> Credentials
+    * Click "New Credentials", and create a service account or [click here](https://console.cloud.google.com/project/_/apiui/credential/serviceaccount)
+    * Download the JSON for this service account, and set the `GOOGLE_APPLICATION_CREDENTIALS`
+    environment variable to point to the file containing the JSON credentials.
+
+    Set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable:
+
+    Linux:
+
+        export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service_account_file.json
+
+    Windows:
+
+        set GOOGLE_APPLICATION_CREDENTIALS=/path/to/service_account_file.json
+
+    Windows (PowerShell):
+
+        $env:GOOGLE_APPLICATION_CREDENTIALS="/path/to/service_account_file.json"
+
 
 ## Before Running
 

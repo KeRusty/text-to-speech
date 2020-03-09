@@ -77,6 +77,7 @@ export default function TTSConverter() {
 
         console.log(file, "FILE")
 
+
         /*AppFetch.post('/SpeechConvert', { file: file })
             .then(function (response) {
 
@@ -100,6 +101,7 @@ export default function TTSConverter() {
     const onDrop = files => {
         console.log(files)
     }
+
 
     return (
         <React.Fragment>
@@ -132,6 +134,7 @@ export default function TTSConverter() {
                                         onDrop={onDrop}
                                         dropzoneText={"Drag and drop an Audio file here or click"}
                                     />
+
 
                                 </Grid>
 
