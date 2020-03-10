@@ -11,6 +11,7 @@
         "@testing-library/user-event": "^7.2.1",
         "axios": "^0.19.2",
         "cors": "^2.8.5",
+        "draft-js": "^0.11.4",
         "google-tts-api": "0.0.4",
         "material-ui-dropzone": "^2.4.8",
         "notistack": "^0.9.9",
