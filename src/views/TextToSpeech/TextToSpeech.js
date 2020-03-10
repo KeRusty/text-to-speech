@@ -74,12 +74,24 @@ export default function TTSConverter() {
 
     const [language, setLanguage] = React.useState('');
 
+    const [audio, setAudio] = React.useState('');
+
+    const [speed, setSpeed] = React.useState('');
+
     const handleGenderChange = event => {
         setGender(event.target.value);
     };
 
+    const handleAudioChange = event => {
+        setAudio(event.target.value);
+    };
+
     const handleLanguageChange = event => {
         setLanguage(event.target.value);
+    };
+
+    const handleSpeedChange = event => {
+        setSpeed(event.target.value);
     };
 
     const onSubmit = (e) => {
@@ -178,6 +190,52 @@ export default function TTSConverter() {
                                             <MenuItem value={"en-US"}>English (United States)</MenuItem>
                                             <MenuItem value={"en-GB"}>English (United Kingdom)</MenuItem>
                                             <MenuItem value={"en-AU"}>English (Australia)</MenuItem>
+
+                                        </Select>
+
+                                    </FormControl>
+
+                                </Grid>
+
+                                <Grid item xs={6}>
+
+                                    <FormControl variant="filled" className={classes.formControl}>
+
+                                        <InputLabel id="audioInput">Audio</InputLabel>
+
+                                        <Select
+                                            labelId="audioType"
+                                            id="audioType"
+                                            value={audio}
+                                            onChange={handleAudioChange}
+                                        >
+
+                                            <MenuItem value={"MP3"}>MP3 (Recommended)</MenuItem>
+                                            <MenuItem value={"LINEAR16"}>LINEAR16</MenuItem>
+                                            <MenuItem value={"OGG_OPUS"}>Opus Encoded Audio</MenuItem>
+
+                                        </Select>
+
+                                    </FormControl>
+
+                                </Grid>
+
+                                <Grid item xs={6}>
+
+                                    <FormControl variant="filled" className={classes.formControl}>
+
+                                        <InputLabel id="speedInput">Speed</InputLabel>
+
+                                        <Select
+                                            labelId="speedType"
+                                            id="speedType"
+                                            value={speed}
+                                            onChange={handleSpeedChange}
+                                        >
+
+                                            <MenuItem value={1}>1</MenuItem>
+                                            <MenuItem value={2}>2</MenuItem>
+                                            <MenuItem value={3}>3</MenuItem>
 
                                         </Select>
 
