@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -10,10 +10,11 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import Copyright from "../../components/Copyright";
 import NavBar from "../../components/NavBar";
 import AppFetch from "../../config";
-import {useSnackbar} from 'notistack';
-import {DropzoneArea} from 'material-ui-dropzone'
+import { useSnackbar } from 'notistack';
+import { DropzoneArea } from 'material-ui-dropzone'
 import axios from 'axios';
-import {TextField} from "@material-ui/core";
+import MicRecorder from 'mic-recorder-to-mp3';
+
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -57,7 +58,6 @@ const useStyles = makeStyles(theme => ({
     },
     formControl: {
         minWidth: 240,
-        margin: theme.spacing(3,0,2)
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -65,52 +65,93 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function SpeechToText() {
+export default function TTSConverter(props) {
+
+
+    /*Added by rangana*/
+    // eslint-disable-next-line no-unused-vars
+    let state = {
+        isRecording: false,
+        blobURL: '',
+        isBlocked: false
+    };
+    const Mp3Recorder = new MicRecorder({ bitRate: 128 });
+
+    navigator.getUserMedia({ audio: true },
+        () => {
+            console.log('Permission Granted');
+            // this.setState({ isBlocked: false });
+            state.isBlocked = false;
+        },
+        () => {
+            console.log('Permission Denied');
+            // this.setState({ isBlocked: true })
+            state.isBlocked = true;
+        },
+    );
+
 
     const classes = useStyles();
+
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
-    const [file, setFile] = useState('');
-    const [transcription, setTranscription] = useState('');
+    /*commented by rangana*/
+    // let [file, setFile] = React.useState('');
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
+
         e.preventDefault();
 
-        let formData = new FormData();
+        /*commented by rangana*/
+      /*  AppFetch.post('/SpeechConvert', {file: file})
+            .then(function (response) {
 
-        formData.append('file', file);
-        formData.append('name', 'Tangent');
+                enqueueSnackbar("Audio Will be Transcribed", {variant: 'success'});
+                setTimeout(() => closeSnackbar, 10000)
+            })
+            .catch(function (error) {
 
-        try {
-            const res = await axios.post('http://localhost:3000/SpeechConvert', formData, {
-                headers: {
-                    'Content-type': 'multipart/form-data'
-                }
-            });
+                enqueueSnackbar(error.message, {variant: 'error'});
+                setTimeout(() => closeSnackbar, 10000)
 
-            setTranscription(res.data);
+            });*/
 
-        } catch (e) {
-            console.log(e);
-        }
+    }
 
-        /*axios({
-            url: 'http://localhost:3000/SpeechConvert',
-            method: 'POST',
-            data: formData
-        }).then((res) => {
-            console.log(res);
-        }, (err) => {
-            console.warn(err);
-        });*/
-    };
+   /* const handleChange = files => {
+        audio = files[0];
+    }
 
-    const handleChange = (files) => {
-        let file = files[0];
+    const onDrop = files => {
+        console.log(files);
+    }*/
 
-        setFile(file);
+   const start = () => {
+       if (state.isBlocked) {
+           console.log('Permission Denied');
+       } else {
+           
+           Mp3Recorder
+               .start()
+               .then(() => {
+                   state.isRecording = true;
+               }).catch((e) => console.error(e));
+       }
+   };
 
-    };
+   const stop = () => {
+       Mp3Recorder
+           .stop()
+           .getMp3()
+           .then(([buffer, blob]) => {
+               const blobURL = URL.createObjectURL(blob);
+               state.blobURL = blobURL;
+               state.isRecording = false;
+               // this.setState({ blobURL, isRecording: false });
+
+               console.log(state);
+           }).catch((e) => console.log(e));
+   };
 
     return (
         <React.Fragment>
@@ -137,24 +178,21 @@ export default function SpeechToText() {
                                 <Grid item xs={12}>
 
                                     {/* commented by rangana */}
-                                    <DropzoneArea
+                                    {/*<DropzoneArea
                                         onChange={handleChange}
                                         acceptedFiles={['audio/*']}
                                         filesLimit={1}
+                                        onDrop={onDrop}
                                         dropzoneText={"Drag and drop an Audio file here or click"}
-                                    />
+                                    />*/}
 
-                                    {/*<button onClick={start} disabled={isRecording}>
+                                    <button onClick={start} disabled={state.isRecording}>
                                         Record
                                     </button>
-                                    <button onClick={stop} disabled={!isRecording}>
+                                    <button onClick={stop} disabled={!state.isRecording}>
                                         Stop
                                     </button>
-                                    <audio src={blobURL} controls="controls"/>*/}
-
-                                    {/*<input type="file" name="file" onChange={(e) => handleChange(e)}/>*/}
-
-                                    <TextField className={classes.formControl} value={transcription}/>
+                                    <audio src={state.blobURL} controls="controls" />
 
                                 </Grid>
 
@@ -184,4 +222,4 @@ export default function SpeechToText() {
 
         </React.Fragment>
     );
-}
+};
