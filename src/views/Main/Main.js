@@ -22,7 +22,7 @@ class Main extends Component {
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/TTSConverter" component={TextToSpeech} />
-                    <Route exact path="/SpeechConerter" component={SpeechToText} />
+                    <Route exact path="/SpeechConverter" component={SpeechToText} />
                 </Switch>
             </main>
         );
