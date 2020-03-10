@@ -100,7 +100,7 @@ export default function TTSConverter() {
 
         let text = e.target.text.value
 
-        AppFetch.post('/ttsConvert', { text: text, gender: gender, language: language })
+        AppFetch.post('/ttsConvert', { text: text, gender: gender, language: language, audio: audio, speed: speed })
             .then(function (response) {
 
                 enqueueSnackbar("Output.mp3 Has been Produced in Server Folder", { variant: 'success' });
