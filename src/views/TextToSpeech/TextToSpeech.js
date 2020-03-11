@@ -16,6 +16,7 @@ import Copyright from "../../components/Copyright";
 import NavBar from "../../components/NavBar";
 import AppFetch from "../../config";
 import { useSnackbar } from 'notistack';
+import RichText from '../../components/RichTextInput';
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -93,10 +94,6 @@ function valuetext(value) {
     return `${value}°C`;
 }
 
-function valueLabelFormat(value) {
-    return marks.findIndex(mark => mark.value === value) + 1;
-}
-
 export default function TTSConverter() {
 
     const classes = useStyles();
@@ -112,6 +109,8 @@ export default function TTSConverter() {
     const [speed, setSpeed] = React.useState('');
 
     const [pitch, setPitch] = React.useState('');
+
+    const [text, setText] = React.useState('');
 
 
     const handleGenderChange = event => {
@@ -134,22 +133,30 @@ export default function TTSConverter() {
         setPitch(newValue);
     };
 
+    const handleTextChange = event => {
+        setText(event);
+    };
+
 
     const onSubmit = (e) => {
 
         e.preventDefault();
 
-        let text = e.target.text.value
-        let ssml
+        // Removes all HTML Tags
+        let cleanText = text.replace(/<\/?[^>]+(>|$)/g, "");
 
-        if (text.includes("<speak>")) {
-            ssml = text
-        } else {
-            return text
-        }
+        let weakBreakRemoval = cleanText.replace(/\[weak break\]/g, '<break time="200ms"/>');
+        let mediumBreakRemoval = weakBreakRemoval.replace(/\[medium break\]/g, '<break time="400ms"/>');
+        let strongBreakRemoval = mediumBreakRemoval.replace(/\[strong break\]/g, '<break time="600ms"/>');
+
+        //let editedText = cleanText.replace(/[weak break]/g, '<break time="200ms"/>');
 
 
-        AppFetch.post('/ttsConvert', { text: text, gender: gender, language: language, audio: audio, speed: speed, pitch: pitch, ssml: ssml })
+
+        let finalText = "<speak>" + strongBreakRemoval + "</speak>";
+
+
+        AppFetch.post('/ttsConvert', { ssml: finalText, gender: gender, language: language, audio: audio, speed: speed, pitch: pitch })
             .then(function (response) {
 
                 enqueueSnackbar("Output.mp3 Has been Produced in Server Folder", { variant: 'success' });
@@ -161,7 +168,6 @@ export default function TTSConverter() {
                 setTimeout(() => closeSnackbar, 10000)
 
             });
-
     }
 
 
@@ -189,14 +195,16 @@ export default function TTSConverter() {
 
                                 <Grid item xs={12}>
 
-                                    <TextField
+                                    {/*<TextField
                                         id="text"
                                         name="text"
                                         label="Enter Text"
                                         fullWidth
                                         multiline
                                         rowsMax="4"
-                                    />
+                                    />*/}
+
+                                    <RichText name={'text'} onChange={handleTextChange} />
 
                                 </Grid>
 
