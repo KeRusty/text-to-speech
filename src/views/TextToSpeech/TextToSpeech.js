@@ -10,6 +10,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import Slider from '@material-ui/core/Slider';
 
 import Copyright from "../../components/Copyright";
 import NavBar from "../../components/NavBar";
@@ -61,8 +62,40 @@ const useStyles = makeStyles(theme => ({
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
+    root: {
+        width: 300,
+    },
+    margin: {
+        height: theme.spacing(3),
+    },
 }));
 
+const marks = [
+    {
+        value: 0,
+        label: '0°C',
+    },
+    {
+        value: 20,
+        label: '20°C',
+    },
+    {
+        value: 37,
+        label: '37°C',
+    },
+    {
+        value: 100,
+        label: '100°C',
+    },
+];
+
+function valuetext(value) {
+    return `${value}°C`;
+}
+
+function valueLabelFormat(value) {
+    return marks.findIndex(mark => mark.value === value) + 1;
+}
 
 export default function TTSConverter() {
 
@@ -77,6 +110,9 @@ export default function TTSConverter() {
     const [audio, setAudio] = React.useState('');
 
     const [speed, setSpeed] = React.useState('');
+
+    const [pitch, setPitch] = React.useState('');
+
 
     const handleGenderChange = event => {
         setGender(event.target.value);
@@ -94,13 +130,26 @@ export default function TTSConverter() {
         setSpeed(event.target.value);
     };
 
+    const handlePitchChange = (event, newValue) => {
+        setPitch(newValue);
+    };
+
+
     const onSubmit = (e) => {
 
         e.preventDefault();
 
         let text = e.target.text.value
+        let ssml
 
-        AppFetch.post('/ttsConvert', { text: text, gender: gender, language: language, audio: audio, speed: speed })
+        if (text.includes("<speak>")) {
+            ssml = text
+        } else {
+            return text
+        }
+
+
+        AppFetch.post('/ttsConvert', { text: text, gender: gender, language: language, audio: audio, speed: speed, pitch: pitch, ssml: ssml })
             .then(function (response) {
 
                 enqueueSnackbar("Output.mp3 Has been Produced in Server Folder", { variant: 'success' });
@@ -242,6 +291,24 @@ export default function TTSConverter() {
                                         </Select>
 
                                     </FormControl>
+
+                                </Grid>
+
+                                <Grid item xs={12}>
+
+                                    <Typography id="slider" gutterBottom>Pitch</Typography>
+
+                                    <Slider
+                                        defaultValue={0}
+                                        getAriaValueText={valuetext}
+                                        aria-labelledby="discrete-slider"
+                                        valueLabelDisplay="auto"
+                                        onChange={handlePitchChange}
+                                        step={0.1}
+                                        marks
+                                        min={-15}
+                                        max={15}
+                                    />
 
                                 </Grid>
 
