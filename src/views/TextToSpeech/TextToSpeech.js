@@ -153,9 +153,9 @@ export default function TTSConverter() {
 
         let fileName = e.target.fileName.value;
 
-        let API_KEY = e.target.apiKey.value;
+        //let API_KEY = e.target.apiKey.value;
 
-        AppFetch.post('/ttsConvert', { ssml: finalText, locale: locale, fileName: fileName, audio: audio, speed: speed, pitch: pitch, apiKey: API_KEY })
+        AppFetch.post('/ttsConvert', { ssml: finalText, locale: locale, fileName: fileName, audio: audio, speed: speed, pitch: pitch })
             .then(function (response) {
 
                 enqueueSnackbar(`${fileName}.mp3 Has been Produced in Server Folder`, { variant: 'success' });
@@ -192,7 +192,7 @@ export default function TTSConverter() {
 
                             <Grid container spacing={3}>
 
-                                <Grid item xs={12}>
+                                {/*<Grid item xs={12}>
 
                                     <TextField
                                         id="apiKey"
@@ -202,7 +202,7 @@ export default function TTSConverter() {
                                         fullWidth
                                     />
 
-                                </Grid>
+                                </Grid>*/}
 
                                 <Grid item xs={12}>
 
