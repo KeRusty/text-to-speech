@@ -1,5 +1,7 @@
 ## Obtain authentication credentials.
 
+    MAKE SURE THE API IS RUNNING BEFORE ATTEMPTING TO USE THIS
+
     Create local credentials by running the following command
 
     * Go to API Manager -> Credentials
@@ -9,11 +11,11 @@
 
     Set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable:
 
-    Linux:
+     Mac OSX or Linux:
 
-        export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service_account_file.json
+        export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/[FILE_NAME].json"
 
-    Windows:
+    Windows (Command Prompt):
 
         set GOOGLE_APPLICATION_CREDENTIALS=/path/to/service_account_file.json
 
@@ -37,12 +39,6 @@ Runs the app in the development mode.<br />
 Keep in mind to run it in [http://localhost:3001](http://localhost:3001) to view it in the browser.
 
 The page will reload if you make edits.<br />
-
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
