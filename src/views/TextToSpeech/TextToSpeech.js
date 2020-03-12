@@ -151,10 +151,14 @@ export default function TTSConverter() {
 
         let finalText = "<speak>" + strongBreakRemoval + "</speak>";
 
-        AppFetch.post('/ttsConvert', { ssml: finalText, locale: locale, language: language, audio: audio, speed: speed, pitch: pitch })
+        let fileName = e.target.fileName.value;
+
+        let API_KEY = e.target.apiKey.value;
+
+        AppFetch.post('/ttsConvert', { ssml: finalText, locale: locale, fileName: fileName, audio: audio, speed: speed, pitch: pitch, apiKey: API_KEY })
             .then(function (response) {
 
-                enqueueSnackbar("Output.mp3 Has been Produced in Server Folder", { variant: 'success' });
+                enqueueSnackbar(`${fileName}.mp3 Has been Produced in Server Folder`, { variant: 'success' });
                 setTimeout(() => closeSnackbar, 10000)
             })
             .catch(function (error) {
@@ -187,6 +191,18 @@ export default function TTSConverter() {
                             <Typography variant="h6" gutterBottom>Enter Text in the Fields Below</Typography>
 
                             <Grid container spacing={3}>
+
+                                <Grid item xs={12}>
+
+                                    <TextField
+                                        id="apiKey"
+                                        name="apiKey"
+                                        label="Enter Your API KEY"
+                                        required
+                                        fullWidth
+                                    />
+
+                                </Grid>
 
                                 <Grid item xs={12}>
 
@@ -228,21 +244,21 @@ export default function TTSConverter() {
                                             onChange={handleLocaleChange}
                                         >
 
-                                            <MenuItem value={"en-AU-Wavenet-A"}>English (AUS - Female)</MenuItem>
-                                            <MenuItem value={"en-AU-Wavenet-B"}>English (AUS - Male)</MenuItem>
-                                            <MenuItem value={"en-AU-Wavenet-C"}>English (AUS - Female)</MenuItem>
-                                            <MenuItem value={"en-AU-Wavenet-D"}>English (AUS - Male)</MenuItem>
-                                            <MenuItem value={"en-IN-Wavenet-A"}>English (IND - Female)</MenuItem>
-                                            <MenuItem value={"en-IN-Wavenet-B"}>English (IND - Male)</MenuItem>
-                                            <MenuItem value={"en-IN-Wavenet-C"}>English (IND - Male)</MenuItem>
-                                            <MenuItem value={"en-GB-Wavenet-A"}>English (UK - Female)</MenuItem>
-                                            <MenuItem value={"en-GB-Wavenet-B"}>English (UK - Male)</MenuItem>
-                                            <MenuItem value={"en-GB-Wavenet-C"}>English (UK - Female)</MenuItem>
-                                            <MenuItem value={"en-GB-Wavenet-D"}>English (UK - Male)</MenuItem>
-                                            <MenuItem value={"en-US-Wavenet-A"}>English (USA - Male)</MenuItem>
-                                            <MenuItem value={"en-US-Wavenet-B"}>English (USA - Male)</MenuItem>
-                                            <MenuItem value={"en-US-Wavenet-C"}>English (USA - Female)</MenuItem>
-                                            <MenuItem value={"en-US-Wavenet-D"}>English (USA - Male)</MenuItem>
+                                            <MenuItem value={"en-AU-Wavenet-A"}>en-AU-Wavenet-A</MenuItem>
+                                            <MenuItem value={"en-AU-Wavenet-B"}>en-AU-Wavenet-B</MenuItem>
+                                            <MenuItem value={"en-AU-Wavenet-C"}>en-AU-Wavenet-C</MenuItem>
+                                            <MenuItem value={"en-AU-Wavenet-D"}>en-AU-Wavenet-D</MenuItem>
+                                            <MenuItem value={"en-IN-Wavenet-A"}>en-IN-Wavenet-A</MenuItem>
+                                            <MenuItem value={"en-IN-Wavenet-B"}>en-IN-Wavenet-B</MenuItem>
+                                            <MenuItem value={"en-IN-Wavenet-C"}>en-IN-Wavenet-C</MenuItem>
+                                            <MenuItem value={"en-GB-Wavenet-A"}>en-GB-Wavenet-A</MenuItem>
+                                            <MenuItem value={"en-GB-Wavenet-B"}>en-GB-Wavenet-B</MenuItem>
+                                            <MenuItem value={"en-GB-Wavenet-C"}>en-GB-Wavenet-C</MenuItem>
+                                            <MenuItem value={"en-GB-Wavenet-D"}>en-GB-Wavenet-D</MenuItem>
+                                            <MenuItem value={"en-US-Wavenet-A"}>en-US-Wavenet-A</MenuItem>
+                                            <MenuItem value={"en-US-Wavenet-B"}>en-US-Wavenet-B</MenuItem>
+                                            <MenuItem value={"en-US-Wavenet-C"}>en-US-Wavenet-C</MenuItem>
+                                            <MenuItem value={"en-US-Wavenet-D"}>en-US-Wavenet-D</MenuItem>
 
                                         </Select>
 
@@ -312,6 +328,18 @@ export default function TTSConverter() {
                                         marks
                                         min={-15}
                                         max={15}
+                                    />
+
+                                </Grid>
+
+                                <Grid item xs={12}>
+
+                                    <TextField
+                                        id="fileName"
+                                        name="fileName"
+                                        label="Enter File Name"
+                                        required
+                                        fullWidth
                                     />
 
                                 </Grid>
