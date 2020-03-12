@@ -100,7 +100,7 @@ export default function TTSConverter() {
 
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-    const [gender, setGender] = React.useState('');
+    const [locale, setLocale] = React.useState('');
 
     const [language, setLanguage] = React.useState('');
 
@@ -113,8 +113,8 @@ export default function TTSConverter() {
     const [text, setText] = React.useState('');
 
 
-    const handleGenderChange = event => {
-        setGender(event.target.value);
+    const handleLocaleChange = event => {
+        setLocale(event.target.value);
     };
 
     const handleAudioChange = event => {
@@ -155,8 +155,10 @@ export default function TTSConverter() {
 
         let finalText = "<speak>" + strongBreakRemoval + "</speak>";
 
+        console.log(finalText)
 
-        AppFetch.post('/ttsConvert', { ssml: finalText, gender: gender, language: language, audio: audio, speed: speed, pitch: pitch })
+
+        AppFetch.post('/ttsConvert', { ssml: finalText, locale: locale, language: language, audio: audio, speed: speed, pitch: pitch })
             .then(function (response) {
 
                 enqueueSnackbar("Output.mp3 Has been Produced in Server Folder", { variant: 'success' });
@@ -195,15 +197,6 @@ export default function TTSConverter() {
 
                                 <Grid item xs={12}>
 
-                                    {/*<TextField
-                                        id="text"
-                                        name="text"
-                                        label="Enter Text"
-                                        fullWidth
-                                        multiline
-                                        rowsMax="4"
-                                    />*/}
-
                                     <RichText name={'text'} onChange={handleTextChange} />
 
                                 </Grid>
@@ -212,18 +205,16 @@ export default function TTSConverter() {
 
                                     <FormControl variant="filled" className={classes.formControl}>
 
-                                        <InputLabel id="voiceTypeInput">Voice Type</InputLabel>
+                                        <InputLabel id="voiceTypeInput">Language</InputLabel>
 
                                         <Select
                                             labelId="voiceType"
                                             id="voiceType"
-                                            value={gender}
-                                            onChange={handleGenderChange}
+                                            value={language}
+                                            onChange={handleLanguageChange}
                                         >
 
-                                            <MenuItem value={"MALE"}>Male</MenuItem>
-                                            <MenuItem value={"FEMALE"}>Female</MenuItem>
-                                            <MenuItem value={"NEUTRAL"}>Neutral</MenuItem>
+                                            <MenuItem value={"MALE"}>English</MenuItem>
 
                                         </Select>
 
@@ -235,18 +226,30 @@ export default function TTSConverter() {
 
                                     <FormControl variant="filled" className={classes.formControl}>
 
-                                        <InputLabel id="languageInput">Language</InputLabel>
+                                        <InputLabel id="languageInput">Locale</InputLabel>
 
                                         <Select
                                             labelId="languageType"
                                             id="languageType"
-                                            value={language}
-                                            onChange={handleLanguageChange}
+                                            value={locale}
+                                            onChange={handleLocaleChange}
                                         >
 
-                                            <MenuItem value={"en-US"}>English (United States)</MenuItem>
-                                            <MenuItem value={"en-GB"}>English (United Kingdom)</MenuItem>
-                                            <MenuItem value={"en-AU"}>English (Australia)</MenuItem>
+                                            <MenuItem value={"en-AU-Wavenet-A"}>English (AUS - Female)</MenuItem>
+                                            <MenuItem value={"en-AU-Wavenet-B"}>English (AUS - Male)</MenuItem>
+                                            <MenuItem value={"en-AU-Wavenet-C"}>English (AUS - Female)</MenuItem>
+                                            <MenuItem value={"en-AU-Wavenet-D"}>English (AUS - Male)</MenuItem>
+                                            <MenuItem value={"en-IN-Wavenet-A"}>English (IND - Female)</MenuItem>
+                                            <MenuItem value={"en-IN-Wavenet-B"}>English (IND - Male)</MenuItem>
+                                            <MenuItem value={"en-IN-Wavenet-C"}>English (IND - Male)</MenuItem>
+                                            <MenuItem value={"en-GB-Wavenet-A"}>English (UK - Female)</MenuItem>
+                                            <MenuItem value={"en-GB-Wavenet-B"}>English (UK - Male)</MenuItem>
+                                            <MenuItem value={"en-GB-Wavenet-C"}>English (UK - Female)</MenuItem>
+                                            <MenuItem value={"en-GB-Wavenet-D"}>English (UK - Male)</MenuItem>
+                                            <MenuItem value={"en-US-Wavenet-A"}>English (USA - Male)</MenuItem>
+                                            <MenuItem value={"en-US-Wavenet-B"}>English (USA - Male)</MenuItem>
+                                            <MenuItem value={"en-US-Wavenet-C"}>English (USA - Female)</MenuItem>
+                                            <MenuItem value={"en-US-Wavenet-D"}>English (USA - Male)</MenuItem>
 
                                         </Select>
 
