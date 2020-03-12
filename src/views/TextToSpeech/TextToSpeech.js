@@ -149,14 +149,7 @@ export default function TTSConverter() {
         let mediumBreakRemoval = weakBreakRemoval.replace(/\[medium break\]/g, '<break time="400ms"/>');
         let strongBreakRemoval = mediumBreakRemoval.replace(/\[strong break\]/g, '<break time="600ms"/>');
 
-        //let editedText = cleanText.replace(/[weak break]/g, '<break time="200ms"/>');
-
-
-
         let finalText = "<speak>" + strongBreakRemoval + "</speak>";
-
-        console.log(finalText)
-
 
         AppFetch.post('/ttsConvert', { ssml: finalText, locale: locale, language: language, audio: audio, speed: speed, pitch: pitch })
             .then(function (response) {
