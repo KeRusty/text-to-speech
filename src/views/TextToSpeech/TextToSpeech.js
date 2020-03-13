@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
         [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-            width: 600,
+            width: 800,
             marginLeft: 'auto',
             marginRight: 'auto',
         },
@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(3, 0, 2),
     },
     formControl: {
-        minWidth: 240,
+        minWidth: 360,
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -188,7 +188,6 @@ export default function TTSConverter() {
                         <br />
 
                         <React.Fragment>
-                            <Typography variant="h6" gutterBottom>Enter Text in the Fields Below</Typography>
 
                             <Grid container spacing={3}>
 
@@ -223,7 +222,9 @@ export default function TTSConverter() {
                                             onChange={handleLanguageChange}
                                         >
 
-                                            <MenuItem value={"MALE"}>English</MenuItem>
+                                            <MenuItem value={"english"}>English</MenuItem>
+                                            <MenuItem value={"french"}>French</MenuItem>
+                                            <MenuItem value={"italian"}>Italian</MenuItem>
 
                                         </Select>
 
@@ -237,30 +238,81 @@ export default function TTSConverter() {
 
                                         <InputLabel id="languageInput">Locale</InputLabel>
 
-                                        <Select
-                                            labelId="languageType"
-                                            id="languageType"
-                                            value={locale}
-                                            onChange={handleLocaleChange}
-                                        >
+                                        {language === "" &&
+                                            <Select
+                                                labelId="languageType"
+                                                id="languageType"
+                                            >
 
-                                            <MenuItem value={"en-AU-Wavenet-A"}>en-AU-Wavenet-A</MenuItem>
-                                            <MenuItem value={"en-AU-Wavenet-B"}>en-AU-Wavenet-B</MenuItem>
-                                            <MenuItem value={"en-AU-Wavenet-C"}>en-AU-Wavenet-C</MenuItem>
-                                            <MenuItem value={"en-AU-Wavenet-D"}>en-AU-Wavenet-D</MenuItem>
-                                            <MenuItem value={"en-IN-Wavenet-A"}>en-IN-Wavenet-A</MenuItem>
-                                            <MenuItem value={"en-IN-Wavenet-B"}>en-IN-Wavenet-B</MenuItem>
-                                            <MenuItem value={"en-IN-Wavenet-C"}>en-IN-Wavenet-C</MenuItem>
-                                            <MenuItem value={"en-GB-Wavenet-A"}>en-GB-Wavenet-A</MenuItem>
-                                            <MenuItem value={"en-GB-Wavenet-B"}>en-GB-Wavenet-B</MenuItem>
-                                            <MenuItem value={"en-GB-Wavenet-C"}>en-GB-Wavenet-C</MenuItem>
-                                            <MenuItem value={"en-GB-Wavenet-D"}>en-GB-Wavenet-D</MenuItem>
-                                            <MenuItem value={"en-US-Wavenet-A"}>en-US-Wavenet-A</MenuItem>
-                                            <MenuItem value={"en-US-Wavenet-B"}>en-US-Wavenet-B</MenuItem>
-                                            <MenuItem value={"en-US-Wavenet-C"}>en-US-Wavenet-C</MenuItem>
-                                            <MenuItem value={"en-US-Wavenet-D"}>en-US-Wavenet-D</MenuItem>
 
-                                        </Select>
+                                            </Select>
+                                        }
+
+                                        {language === "english" &&
+                                            <Select
+                                                labelId="languageType"
+                                                id="languageType"
+                                                value={locale}
+                                                onChange={handleLocaleChange}
+                                            >
+
+                                                <MenuItem value={"en-AU-Wavenet-A"}>en-AU-Wavenet-A</MenuItem>
+                                                <MenuItem value={"en-AU-Wavenet-B"}>en-AU-Wavenet-B</MenuItem>
+                                                <MenuItem value={"en-AU-Wavenet-C"}>en-AU-Wavenet-C</MenuItem>
+                                                <MenuItem value={"en-AU-Wavenet-D"}>en-AU-Wavenet-D</MenuItem>
+                                                <MenuItem value={"en-IN-Wavenet-A"}>en-IN-Wavenet-A</MenuItem>
+                                                <MenuItem value={"en-IN-Wavenet-B"}>en-IN-Wavenet-B</MenuItem>
+                                                <MenuItem value={"en-IN-Wavenet-C"}>en-IN-Wavenet-C</MenuItem>
+                                                <MenuItem value={"en-GB-Wavenet-A"}>en-GB-Wavenet-A</MenuItem>
+                                                <MenuItem value={"en-GB-Wavenet-B"}>en-GB-Wavenet-B</MenuItem>
+                                                <MenuItem value={"en-GB-Wavenet-C"}>en-GB-Wavenet-C</MenuItem>
+                                                <MenuItem value={"en-GB-Wavenet-D"}>en-GB-Wavenet-D</MenuItem>
+                                                <MenuItem value={"en-US-Wavenet-A"}>en-US-Wavenet-A</MenuItem>
+                                                <MenuItem value={"en-US-Wavenet-B"}>en-US-Wavenet-B</MenuItem>
+                                                <MenuItem value={"en-US-Wavenet-C"}>en-US-Wavenet-C</MenuItem>
+                                                <MenuItem value={"en-US-Wavenet-D"}>en-US-Wavenet-D</MenuItem>
+
+                                            </Select>
+
+                                        }
+
+                                        {language === "french" &&
+                                            <Select
+                                                labelId="languageType"
+                                                id="languageType"
+                                                value={locale}
+                                                onChange={handleLocaleChange}
+                                            >
+
+                                                <MenuItem value={"fr-CA-Wavenet-A"}>fr-CA-Wavenet-A</MenuItem>
+                                                <MenuItem value={"fr-CA-Wavenet-B"}>fr-CA-Wavenet-B</MenuItem>
+                                                <MenuItem value={"fr-CA-Wavenet-C"}>fr-CA-Wavenet-C</MenuItem>
+                                                <MenuItem value={"fr-CA-Wavenet-D"}>fr-CA-Wavenet-D</MenuItem>
+                                                <MenuItem value={"fr-FR-Wavenet-A"}>fr-FR-Wavenet-A</MenuItem>
+                                                <MenuItem value={"fr-FR-Wavenet-B"}>fr-FR-Wavenet-B</MenuItem>
+                                                <MenuItem value={"fr-FR-Wavenet-C"}>fr-FR-Wavenet-C</MenuItem>
+                                                <MenuItem value={"fr-FR-Wavenet-D"}>fr-FR-Wavenet-D</MenuItem>
+
+                                            </Select>
+
+                                        }
+
+                                        {language === "italian" &&
+                                            <Select
+                                                labelId="languageType"
+                                                id="languageType"
+                                                value={locale}
+                                                onChange={handleLocaleChange}
+                                            >
+
+                                                <MenuItem value={"it-IT-Wavenet-A"}>it-IT-Wavenet-A</MenuItem>
+                                                <MenuItem value={"it-IT-Wavenet-B"}>it-IT-Wavenet-B</MenuItem>
+                                                <MenuItem value={"it-IT-Wavenet-C"}>it-IT-Wavenet-C</MenuItem>
+                                                <MenuItem value={"it-IT-Wavenet-D"}>it-IT-Wavenet-D</MenuItem>
+
+                                            </Select>
+
+                                        }
 
                                     </FormControl>
 
