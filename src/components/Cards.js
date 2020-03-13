@@ -10,6 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+import TextPicture from '../assets/textToSpeech.png'
+import SpeechPicture from '../assets/speechToText.png'
+
 const useStyles = makeStyles(theme => ({
     heroContent: {
         backgroundColor: theme.palette.background.paper,
@@ -60,11 +63,21 @@ export default function Cards(props) {
 
                                 <Card className={classes.card}>
 
-                                    <CardMedia
-                                        className={classes.cardMedia}
-                                        image="https://source.unsplash.com/random"
-                                        title="Image title"
-                                    />
+                                    {card.image === "text" &&
+                                        <CardMedia
+                                            className={classes.cardMedia}
+                                            image={TextPicture}
+                                            title="Image title"
+                                        />
+                                    }
+
+                                    {card.image === "speech" &&
+                                        <CardMedia
+                                            className={classes.cardMedia}
+                                            image={SpeechPicture}
+                                            title="Image title"
+                                        />
+                                    }
 
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom variant="h5" component="h2">{card.heading}</Typography>
