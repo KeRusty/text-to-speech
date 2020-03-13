@@ -27,8 +27,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const cardData = [
-    { heading: "Text To Speech", content: "Convert Text To Speech Here", link: "/TTSConverter" },
-    { heading: "Speech To Text", content: "Convert Speech To Text Here", link: "/SpeechConverter" },
+    { heading: "Text To Speech", content: "Convert Text To Speech Here", link: "/TTSConverter", image: "text" },
+    { heading: "Speech To Text", content: "Convert Speech To Text Here", link: "/SpeechConverter", image: "speech" },
 ];
 
 
