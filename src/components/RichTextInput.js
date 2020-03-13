@@ -46,8 +46,7 @@ export default function RichTextInput(props) {
 
     const controls = [
         'undo', 'redo', 'separator',
-        'bold', 'italic', 'underline', 'emoji', 'separator',
-        'separator', 'fullscreen'
+        'bold', 'italic', 'underline', 'separator'
     ];
 
     const extendControls = [
