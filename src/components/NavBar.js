@@ -5,10 +5,16 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+import TextPicture from '../assets/ttsNav.png'
+import SpeechPicture from '../assets/sttNav.png'
+
 const useStyles = makeStyles(theme => ({
     appBar: {
         position: 'relative',
     },
+    logo: {
+        width: 100
+    }
 
 }));
 
@@ -25,6 +31,8 @@ export default function NavBar(props) {
             <AppBar position="absolute" color="primary" className={classes.appBar}>
 
                 <Toolbar>
+
+                    {<img src={props.logo === "TTS" ? TextPicture : SpeechPicture} alt="logo" className={classes.logo} />}
 
                     <Typography variant="h6" color="inherit" noWrap>{props.heading}</Typography>
 

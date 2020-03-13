@@ -178,7 +178,7 @@ export default function TTSConverter() {
 
             <CssBaseline />
 
-            <NavBar heading={"Text to Speech Converter"} />
+            <NavBar heading={"Text to Speech Converter"} logo="TTS" />
 
             <main className={classes.layout}>
 
