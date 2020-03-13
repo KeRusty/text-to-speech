@@ -60,6 +60,9 @@ const useStyles = makeStyles(theme => ({
     formControl: {
         minWidth: 360,
     },
+    formControlAlt: {
+        minWidth: 748,
+    },
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
@@ -91,7 +94,7 @@ const marks = [
 ];
 
 function valuetext(value) {
-    return `${value}°C`;
+    return `${value}`;
 }
 
 export default function TTSConverter() {
@@ -213,6 +216,29 @@ export default function TTSConverter() {
 
                                     <FormControl variant="filled" className={classes.formControl}>
 
+                                        <InputLabel id="audioInput">Audio</InputLabel>
+
+                                        <Select
+                                            labelId="audioType"
+                                            id="audioType"
+                                            value={audio}
+                                            onChange={handleAudioChange}
+                                        >
+
+                                            <MenuItem value={"MP3"}>MP3 (Recommended)</MenuItem>
+                                            <MenuItem value={"LINEAR16"}>LINEAR16</MenuItem>
+                                            <MenuItem value={"OGG_OPUS"}>Opus Encoded Audio</MenuItem>
+
+                                        </Select>
+
+                                    </FormControl>
+
+                                </Grid>
+
+                                <Grid item xs={6}>
+
+                                    <FormControl variant="filled" className={classes.formControl}>
+
                                         <InputLabel id="voiceTypeInput">Language</InputLabel>
 
                                         <Select
@@ -232,9 +258,9 @@ export default function TTSConverter() {
 
                                 </Grid>
 
-                                <Grid item xs={6}>
+                                <Grid item xs={12}>
 
-                                    <FormControl variant="filled" className={classes.formControl}>
+                                    <FormControl variant="filled" className={classes.formControlAlt}>
 
                                         <InputLabel id="languageInput">Locale</InputLabel>
 
@@ -318,54 +344,6 @@ export default function TTSConverter() {
 
                                 </Grid>
 
-                                <Grid item xs={6}>
-
-                                    <FormControl variant="filled" className={classes.formControl}>
-
-                                        <InputLabel id="audioInput">Audio</InputLabel>
-
-                                        <Select
-                                            labelId="audioType"
-                                            id="audioType"
-                                            value={audio}
-                                            onChange={handleAudioChange}
-                                        >
-
-                                            <MenuItem value={"MP3"}>MP3 (Recommended)</MenuItem>
-                                            <MenuItem value={"LINEAR16"}>LINEAR16</MenuItem>
-                                            <MenuItem value={"OGG_OPUS"}>Opus Encoded Audio</MenuItem>
-
-                                        </Select>
-
-                                    </FormControl>
-
-                                </Grid>
-
-                                <Grid item xs={6}>
-
-                                    <FormControl variant="filled" className={classes.formControl}>
-
-                                        <InputLabel id="speedInput">Speed</InputLabel>
-
-                                        <Select
-                                            labelId="speedType"
-                                            id="speedType"
-                                            value={speed}
-                                            onChange={handleSpeedChange}
-                                        >
-
-                                            <MenuItem value={1}>1</MenuItem>
-                                            <MenuItem value={1.5}>1.5</MenuItem>
-                                            <MenuItem value={2}>2</MenuItem>
-                                            <MenuItem value={2.5}>2.5</MenuItem>
-                                            <MenuItem value={3}>3</MenuItem>
-
-                                        </Select>
-
-                                    </FormControl>
-
-                                </Grid>
-
                                 <Grid item xs={12}>
 
                                     <Typography id="slider" gutterBottom>Pitch</Typography>
@@ -380,6 +358,24 @@ export default function TTSConverter() {
                                         marks
                                         min={-15}
                                         max={15}
+                                    />
+
+                                </Grid>
+
+                                <Grid item xs={12}>
+
+                                    <Typography id="slider" gutterBottom>Speed</Typography>
+
+                                    <Slider
+                                        defaultValue={0}
+                                        getAriaValueText={valuetext}
+                                        aria-labelledby="discrete-slider"
+                                        valueLabelDisplay="auto"
+                                        onChange={handleSpeedChange}
+                                        step={0.5}
+                                        marks
+                                        min={1}
+                                        max={3}
                                     />
 
                                 </Grid>
