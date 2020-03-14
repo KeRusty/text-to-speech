@@ -7,13 +7,15 @@ import Typography from '@material-ui/core/Typography';
 
 import TextPicture from '../assets/ttsNav.png'
 import SpeechPicture from '../assets/sttNav.png'
+import DexLabsPicture from '../assets/dex-logo.png'
 
 const useStyles = makeStyles(theme => ({
     appBar: {
         position: 'relative',
     },
     logo: {
-        width: 100
+        width: 100,
+        //paddingRight: 20
     }
 
 }));
@@ -32,7 +34,7 @@ export default function NavBar(props) {
 
                 <Toolbar>
 
-                    {<img src={props.logo === "TTS" ? TextPicture : SpeechPicture} alt="logo" className={classes.logo} />}
+                    {<img src={props.logo === "TTS" ? TextPicture : props.logo === "home" ? DexLabsPicture : SpeechPicture} alt="logo" className={classes.logo} />}
 
                     <Typography variant="h6" color="inherit" noWrap>{props.heading}</Typography>
 
