@@ -40,7 +40,7 @@ export default function Dashboard(props) {
 
             <CssBaseline />
 
-            <NavBar heading={"Text to Speech Converter"} />
+            <NavBar logo="home" />
 
             <main>
                 {/* Hero unit */}
