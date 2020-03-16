@@ -31,19 +31,6 @@ export default function RichTextInput(props) {
         setEditorState(ContentUtils.insertText(editorState, '[strong break]'))
     };
 
-    const insertReducedEmphasis = () => {
-        setEditorState(ContentUtils.insertText(editorState, '[reduced emphasis]'))
-    };
-
-    const insertModerateEmphasis = () => {
-        setEditorState(ContentUtils.insertText(editorState, '[moderate emphasis]'))
-    };
-
-    const insertStrongEmphasis = () => {
-        setEditorState(ContentUtils.insertText(editorState, '[strong emphasis]'))
-    };
-
-
     const controls = [
         'undo', 'redo', 'separator',
         'bold', 'italic', 'underline', 'separator'
