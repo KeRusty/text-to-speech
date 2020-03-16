@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const AppFetch = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: "http://localhost:3002",
     timeout: 1000
 });
 
