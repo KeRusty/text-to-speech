@@ -74,25 +74,6 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const marks = [
-    {
-        value: 0,
-        label: '0°C',
-    },
-    {
-        value: 20,
-        label: '20°C',
-    },
-    {
-        value: 37,
-        label: '37°C',
-    },
-    {
-        value: 100,
-        label: '100°C',
-    },
-];
-
 function valuetext(value) {
     return `${value}`;
 }
@@ -146,9 +127,20 @@ export default function TTSConverter() {
         e.preventDefault();
 
         // Removes all HTML Tags
-        let cleanText = text.replace(/<\/?[^>]+(>|$)/g, "");
+        //let cleanText = text.replace(/<\/?[^>]+(>|$)/g, "");
 
-        let weakBreakRemoval = cleanText.replace(/\[weak break\]/g, '<break time="200ms"/>');
+        // Replaces current HTML Tags
+        let pTagRemove = text.replace(/<p>/g, "");
+        let closePTagRemove = pTagRemove.replace(/<\/p>/g, "");
+        let strongTagRemove = closePTagRemove.replace(/<strong>/g, '<emphasis level="strong">');
+        let closeStrongTagRemove = strongTagRemove.replace(/<\/strong>/g, '</emphasis>');
+        let emTagRemove = closeStrongTagRemove.replace(/<em>/g, '<emphasis level="moderate">');
+        let closeEmTagRemove = emTagRemove.replace(/<\/em>/g, '</emphasis>');
+        let uTagRemove = closeEmTagRemove.replace(/<u>/g, '<emphasis level="reduced">');
+        let closeUTagRemove = uTagRemove.replace(/<\/u>/g, '</emphasis>');
+
+
+        let weakBreakRemoval = closeUTagRemove.replace(/\[weak break\]/g, '<break time="200ms"/>');
         let mediumBreakRemoval = weakBreakRemoval.replace(/\[medium break\]/g, '<break time="400ms"/>');
         let strongBreakRemoval = mediumBreakRemoval.replace(/\[strong break\]/g, '<break time="600ms"/>');
 
@@ -156,20 +148,26 @@ export default function TTSConverter() {
 
         let fileName = e.target.fileName.value;
 
+        if (fileName && audio && locale) {
+            AppFetch.post('/ttsConvert', { ssml: finalText, locale: locale, fileName: fileName, audio: audio, speed: speed, pitch: pitch })
+                .then(function (response) {
+
+                    enqueueSnackbar(`${fileName}.mp3 Has been Produced in Server Folder`, { variant: 'success' });
+                    setTimeout(() => closeSnackbar, 10000)
+                })
+                .catch(function (error) {
+
+                    enqueueSnackbar(error.message, { variant: 'error' });
+                    setTimeout(() => closeSnackbar, 10000)
+
+                });
+        } else {
+            enqueueSnackbar(`Please Make Sure FILE NAME, AUDIO and LOCALE ARE SET`, { variant: 'warning' });
+            setTimeout(() => closeSnackbar, 10000)
+        }
+
         //let API_KEY = e.target.apiKey.value;
 
-        AppFetch.post('/ttsConvert', { ssml: finalText, locale: locale, fileName: fileName, audio: audio, speed: speed, pitch: pitch })
-            .then(function (response) {
-
-                enqueueSnackbar(`${fileName}.mp3 Has been Produced in Server Folder`, { variant: 'success' });
-                setTimeout(() => closeSnackbar, 10000)
-            })
-            .catch(function (error) {
-
-                enqueueSnackbar(error.message, { variant: 'error' });
-                setTimeout(() => closeSnackbar, 10000)
-
-            });
     }
 
 
